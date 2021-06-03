@@ -1,9 +1,10 @@
 import {Dispatch} from "redux";
 import axios from "../../axios"
 import {
+    IData,
     IGetPostsError,
     IGetPostsStart,
-    IGetPostsSuccess,
+    IGetPostsSuccess, IPayload,
     PostsAction,
     postsActionTypes
 } from "../types/posts";
@@ -15,29 +16,34 @@ export const getPostsFetch = () => async (dispatch: Dispatch<PostsAction>) => {
         const response = await axios.get('/posts')
         dispatch(getPostsSuccess(response.data))
     } catch (e) {
-        dispatch(getPostsError(e))
+        dispatch(getPostsError(e.data?.message || e))
     }
 }
 
-export const putPostsFetch = (data: {title: string, body: string}) => async (dispatch: Dispatch<PostsAction>) => {
+export const createPostsFetch = (data: IData) => async (dispatch: Dispatch<PostsAction>) => {
     try {
         await axios.post(`/posts`, data)
-        getPostsFetch()
-    }
-    catch (e) {
-        dispatch(getPostsError(e))
+    } catch (e) {
+        dispatch(getPostsError(e.data?.message || e))
     }
 }
 
-export const deletePostFetch = (id: number) => async (dispatch: Dispatch<PostsAction>) => {
+export const changePostsFetch = (data: IData, id: number) => async (dispatch: Dispatch<PostsAction>) => {
     try {
-        await axios.delete(`/posts/${id}`)
-        await getPostsFetch()
-    }
-    catch (e) {
-        dispatch(getPostsError(e))
+        await axios.put(`/posts/${id}`, data)
+    } catch (e) {
+        dispatch(getPostsError(e.message || e))
     }
 }
+
+export const deletePostFetch = (id: number | null) => async (dispatch: Dispatch<PostsAction>) => {
+    try {
+        await axios.delete(`/posts/${id}`)
+    } catch (e) {
+        dispatch(getPostsError(e.message || e))
+    }
+}
+
 
 const getPostsStart = (): IGetPostsStart => ({
     type: postsActionTypes.GET_POSTS_START
@@ -45,11 +51,7 @@ const getPostsStart = (): IGetPostsStart => ({
 
 
 const getPostsSuccess = (
-    payload: Array<{
-        id: number,
-        title: string,
-        body: string
-    }>): IGetPostsSuccess => ({
+    payload: Array<IPayload>): IGetPostsSuccess => ({
     type: postsActionTypes.GET_POSTS_SUCCESS,
     payload,
 })

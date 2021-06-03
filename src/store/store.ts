@@ -13,8 +13,8 @@ declare global {
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
 const rootReducer = combineReducers({
-    posts: postsReducer,
-    post: postReducer
+    postsState: postsReducer,
+    postState: postReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>

@@ -1,0 +1,12 @@
+
+.header {
+    display: flex !important;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    background-color: #eee;
+}
+
+.title {
+    margin-left: 50px;
+}

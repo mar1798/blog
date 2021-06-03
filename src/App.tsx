@@ -1,17 +1,11 @@
-import React, {useEffect} from 'react';
-import {useActions} from "./hooks/useActions";
+import React from 'react';
+import {Routes} from "./routes";
 
 function App() {
-  const {getPostsFetch} = useActions()
 
-  useEffect(()=>{
-    getPostsFetch()
-  }, [getPostsFetch])
-
-
-  return (
-    <h1>hello</h1>
-  );
+    return (
+        <Routes/>
+    );
 }
 
 export default App;

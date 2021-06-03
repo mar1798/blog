@@ -1,7 +1,7 @@
-import * as postsActionCreators  from './postsAction'
-import * as postActionCreators  from './postAction'
+import * as postsActionCreators from './postsAction'
+import * as postActionCreators from './postAction'
 
-export const ActionCreator =   {
+export const ActionCreator = {
     ...postsActionCreators,
     ...postActionCreators
 }

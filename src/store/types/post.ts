@@ -1,20 +1,18 @@
-
-
-
+export interface IPayload {
+    id: number | null,
+    title: string,
+    body: string,
+    comments: Array<{
+        id: number | null,
+        postId: number | null,
+        body: string
+    }>
+}
 
 export interface postState {
     loading: boolean,
-    post: Array<{
-        id: number | null,
-        title: string | null,
-        body: string | null,
-        comments: Array<{
-            id: number | null,
-            postId: number | null,
-            body: string | null
-        }>
-    }>,
-    error: null | string,
+    post: IPayload,
+    error: string,
 }
 
 export enum postActionTypes {
@@ -31,16 +29,7 @@ export interface IGetPostStart {
 
 export interface IGetPostSuccess {
     type: postActionTypes.GET_POST_SUCCESS,
-    payload: Array<{
-        id: number | null,
-        title: string | null,
-        body: string | null,
-        comments: Array<{
-            id: number | null,
-            postId: number | null,
-            body: string | null
-        }>
-    }>
+    payload: IPayload
 }
 
 export interface IGetPostError {
